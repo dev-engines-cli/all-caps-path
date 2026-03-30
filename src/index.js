@@ -2,11 +2,7 @@
  * @file Library entrypoint.
  */
 
-/**
- * Asynchronously adds a folder to the PATH.
- */
-export const addToPATH = function () {
-};
+export { addToPATH } from './addToPATH.js';
 
 /**
  * Synchronously checks if a folder is in the PATH.

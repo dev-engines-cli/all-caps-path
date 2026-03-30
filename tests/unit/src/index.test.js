@@ -5,11 +5,9 @@ import {
 } from '@/index.js';
 
 describe('Index', () => {
-  describe('addToPATH', () => {
-    test('STUB: Does nothing', () => {
-      expect(addToPATH())
-        .toEqual(undefined);
-    });
+  test('Exports public functions', () => {
+    expect(typeof(addToPATH))
+      .toEqual('function');
   });
 
   describe('existsInPATH', () => {
