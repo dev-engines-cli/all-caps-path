@@ -5,24 +5,14 @@ import {
 } from '@/index.js';
 
 describe('Index', () => {
-  describe('addToPATH', () => {
-    test('STUB: Does nothing', () => {
-      expect(addToPATH())
-        .toEqual(undefined);
-    });
-  });
+  test('Exports public functions', () => {
+    expect(typeof(addToPATH))
+      .toEqual('function');
 
-  describe('existsInPATH', () => {
-    test('STUB: Does nothing', () => {
-      expect(existsInPATH())
-        .toEqual(false);
-    });
-  });
+    expect(typeof(existsInPATH))
+      .toEqual('function');
 
-  describe('removeFromPATH', () => {
-    test('STUB: Does nothing', () => {
-      expect(removeFromPATH())
-        .toEqual(undefined);
-    });
+    expect(typeof(removeFromPATH))
+      .toEqual('function');
   });
 });
