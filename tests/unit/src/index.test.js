@@ -11,12 +11,8 @@ describe('Index', () => {
 
     expect(typeof(existsInPATH))
       .toEqual('function');
-  });
 
-  describe('removeFromPATH', () => {
-    test('STUB: Does nothing', () => {
-      expect(removeFromPATH())
-        .toEqual(undefined);
-    });
+    expect(typeof(removeFromPATH))
+      .toEqual('function');
   });
 });
