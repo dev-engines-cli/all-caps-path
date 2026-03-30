@@ -3,15 +3,7 @@
  */
 
 export { addToPATH } from './addToPATH.js';
-
-/**
- * Synchronously checks if a folder is in the PATH.
- *
- * @return {boolean} true = exists on the PATH
- */
-export const existsInPATH = function () {
-  return false;
-};
+export { existsInPATH } from './existsInPATH.js';
 
 /**
  * Asynchronously removes a folder from the PATH.
