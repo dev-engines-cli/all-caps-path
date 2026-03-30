@@ -145,20 +145,19 @@ const asyncAwaitExample = async function () {
 ## Alternatives
 
 * https://github.com/ritch/paths
- * Published 2012
- * Only does Unix-based systems
- * Just updates the ~/.profile
- * Uses CJS
+  * Published 2012
+  * Only does Unix-based systems
+  * Just updates the ~/.profile
+  * Uses CJS
 * https://github.com/MarkTiedemann/win-path
- * Published 2017
- * Only does Windows systems
- * Requires PowerShell already in PATH
- * Uses CJS
+  * Published 2017
+  * Only does Windows systems
+  * Requires PowerShell already in PATH
+  * Uses CJS
 * https://git.rootprojects.org/root/pathman/src/branch/master/npm
- * Published 2019, last update 2023
- * Downloads a binary to add/remove from the PATH for you.
- * Ran as a CLI, not as JS functions
- * The binary source code is written in GO.
- * Unix PATHs are stored in `~/.config/envman/PATH.sh`
- * Windows PATHs are stored in the registry
-
+  * Published 2019, last update 2023
+  * Downloads a binary to add/remove from the PATH for you.
+  * Ran as a CLI, not as JS functions
+  * The binary source code is written in GO.
+  * Unix PATHs are stored in `~/.config/envman/PATH.sh`
+  * Windows PATHs are stored in the registry
