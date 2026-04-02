@@ -26,7 +26,7 @@ This project is not finished yet.
   * [ ] Unix functionality/tests
 * [ ] Publishing
   * [x] `package.json` library publishing adjustments
-  * [ ] GH Release/Publish to npm
+  * [x] GH Release/Publish to npm
 
 
 ## Install
