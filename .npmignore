@@ -1,0 +1,12 @@
+.git/
+.github/
+node_modules/
+tests/
+.editorconfig
+.eslintrc.cjs
+.gitignore
+.npmignore
+CODE_OF_CONDUCT.md
+eslint.config.js
+jsconfig.json
+vitest.config.js

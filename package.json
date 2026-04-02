@@ -2,7 +2,6 @@
   "name": "all-caps-path",
   "type": "module",
   "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
     "test": "vitest run --coverage",
     "unit": "vitest --coverage",
@@ -26,6 +25,22 @@
     "globals": "^17.4.0",
     "memfs": "^4.57.1",
     "vitest": "^4.1.1"
+  },
+  "private": false,
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "main": "index.js",
+  "module": "./index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    },
+    "./index.js": {
+      "import": "./index.js"
+    }
   },
   "repository": {
     "type": "git",
