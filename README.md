@@ -8,6 +8,27 @@ A Node.js library to add/remove folders to the system environment PATH (or $PATH
 * Source is JavaScript, no binaries used (except the built-in PowerShell.exe on Windows)
 
 
+## WIP: Tasks
+
+This project is not finished yet.
+
+**Remaining tasks:**
+
+* [x] Project setup (lint/tests/CI)
+* [ ] addToPATH
+  * [ ] Windows functionality/tests
+  * [ ] Unix functionality/tests
+* [ ] existsInPATH functionality
+  * [ ] Windows functionality/tests
+  * [ ] Unix functionality/tests
+* [ ] removeFromPATH functionality
+  * [ ] Windows functionality/tests
+  * [ ] Unix functionality/tests
+* [ ] Publishing
+  * [ ] `package.json` library publishing adjustments
+  * [ ] GH Release/Publish to npm
+
+
 ## Install
 
 * `npm install --save all-caps-path`
