@@ -17,7 +17,7 @@ const config = defineConfig({
   test: {
     coverage: {
       exclude: [
-        './src/index.js'
+        './index.js'
       ],
       include: [
         './src/**/*'
