@@ -15,24 +15,26 @@
  * Only does Windows, requires powershell already in PATH (should be fine), uses CJS, published 2017
  */
 
+/*
 import {
   appendFileSync,
   existsSync,
   readFileSync
 } from 'node:fs';
+*/
 import {
-  homedir,
+  // homedir,
   platform
 } from 'node:os';
-import { join } from 'node:path';
+// import { join } from 'node:path';
 
 /**
  * Add the folder to the user's PATH for Windows systems.
  *
  * @param {string} folder  The folder to add to the PATH
  */
-const addToWindowsPATH = function () {
-  console.log('STUB: Windows implementation not complete.');
+const addToWindowsPATH = function (folder) {
+  console.log('STUB: Windows', folder);
 };
 
 /**
@@ -40,7 +42,9 @@ const addToWindowsPATH = function () {
  *
  * @param {string} folder  The folder to add to the PATH
  */
-const addToUnixPATH = function (state) {
+const addToUnixPATH = function (folder) {
+  console.log('STUB: Unix', folder);
+  /*
   const home = state.homeDirectory;
   const shell = process.env.SHELL || '/bin/bash';
   let configFile;
@@ -55,6 +59,7 @@ const addToUnixPATH = function (state) {
   } else {
     configFile = join(home, '.profile');
   }
+  */
 };
 
 /**

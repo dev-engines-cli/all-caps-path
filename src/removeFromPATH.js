@@ -15,16 +15,18 @@
  * Only does Windows, requires powershell already in PATH (should be fine), uses CJS, published 2017
  */
 
+/*
 import {
   existsSync,
   readFileSync,
   writeFileSync
 } from 'node:fs';
+*/
 import {
-  homedir,
+  // homedir,
   platform
 } from 'node:os';
-import { join } from 'node:path';
+// import { join } from 'node:path';
 
 /**
  * Remove the folder from the user's PATH for Windows systems.
@@ -32,7 +34,7 @@ import { join } from 'node:path';
  * @param {string} folder  The folder to remove from the PATH
  */
 const removeFromWindowsPATH = function (folder) {
-  console.log('STUB: Windows');
+  console.log('STUB: Windows', folder);
 };
 
 /**
@@ -41,7 +43,7 @@ const removeFromWindowsPATH = function (folder) {
  * @param {string} folder  The folder to remove from the PATH
  */
 const removeFromUnixPATH = function (folder) {
-  console.log('STUB: Unix');
+  console.log('STUB: Unix', folder);
   /*
   // Check config files
   const home = homedir();
