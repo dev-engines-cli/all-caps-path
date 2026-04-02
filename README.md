@@ -24,7 +24,7 @@ This project is not finished yet.
 * [ ] removeFromPATH functionality
   * [ ] Windows functionality/tests
   * [ ] Unix functionality/tests
-* [ ] Publishing
+* [x] Publishing
   * [x] `package.json` library publishing adjustments
   * [x] GH Release/Publish to npm
 
