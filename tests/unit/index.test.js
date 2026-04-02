@@ -2,7 +2,7 @@ import {
   addToPATH,
   existsInPATH,
   removeFromPATH
-} from '@/index.js';
+} from '../../index.js';
 
 describe('Index', () => {
   test('Exports public functions', () => {
