@@ -17,7 +17,7 @@ This project is not finished yet.
 * [x] Project setup (lint/tests/CI)
 * [ ] addToPATH
   * [ ] Windows functionality/tests
-  * [ ] Unix functionality/tests
+  * [x] Unix functionality/tests
 * [ ] existsInPATH functionality
   * [ ] Windows functionality/tests
   * [ ] Unix functionality/tests
@@ -77,7 +77,7 @@ if (alreadyAdded) {
 
 ### `addToPATH`
 
-To add a folder to the user's PATH, use the **asynchronous** `addToPATH` function.
+To add a folder to the user's PATH, use the **synchronous** `addToPATH` function.
 
 You do not need to check if the folder already exists on the PATH, we will do this check
 first internally, and return early if it already exists.
@@ -87,28 +87,23 @@ import { join } from 'node:path';
 
 import { addToPATH } from 'all-caps-path';
 
-// .then example
-const chainedExample = function () {
-  const myFolder = join(process.cwd(), 'my-folder');
-  addToPATH(myFolder)
-    .then(() => {
-      console.log('Done.');
-    })
-    .catch((error) => {
-      console.log('Error adding folder to PATH.', { myFolder, error });
-    });
-};
+const myFolder = join(process.cwd(), 'my-folder');
 
-// async/await example
-const asyncAwaitExample = async function () {
-  const myFolder = join(process.cwd(), 'my-folder');
-  try {
-    await addToPATH(myFolder);
-  } catch (error) {
-    console.log('Error adding folder to PATH.', { myFolder, error });
+// Optional custom logging function, uses console.log by default
+function logger (message, data) {
+  if (data) {
+    console.log(message, data);
+  } else {
+    console.log(message);
   }
-  console.log('Done.');
-};
+}
+
+try {
+  addToPATH(myFolder, logger);
+} catch (error) {
+  console.log('Error adding folder to PATH.', error);
+}
+console.log('Done.');
 ```
 
 
