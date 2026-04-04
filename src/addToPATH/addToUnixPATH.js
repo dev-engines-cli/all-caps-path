@@ -2,7 +2,6 @@
  * @file Logic related to adding a folder to the PATH for each OS.
  */
 
-
 import {
   appendFileSync,
   readFileSync
