@@ -1,5 +1,5 @@
 /**
- * @file Logic related to adding a folder to the PATH for each OS.
+ * @file Logic related to adding a folder to the PATH on Unix-based systems.
  */
 
 import {
