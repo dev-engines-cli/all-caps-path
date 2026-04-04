@@ -5,8 +5,6 @@
 /**
  * Reference existing library implementations:
  *
- * https://github.com/ritch/paths
- * Only does Unix, last update 2012, just updates the ~/.profile, uses CJS
  *
  * https://git.rootprojects.org/root/pathman/src/branch/master/npm
  * Just downloads a binary to add/remove from the PATH for you. The source code is actually GO.
