@@ -2,13 +2,6 @@
  * @file Logic related to adding a folder to the PATH for each OS.
  */
 
-/**
- * Reference existing library implementations:
- *
- *
- * https://git.rootprojects.org/root/pathman/src/branch/master/npm
- * Just downloads a binary to add/remove from the PATH for you. The source code is actually GO.
- */
 
 import {
   appendFileSync,
