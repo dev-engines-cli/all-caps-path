@@ -101,9 +101,14 @@ function logger (message, data) {
     console.log(message);
   }
 }
+// Optional argument, ignored when ran on Windows.
+// Allows: '.zshrc', '.bash_profile', '.bashrc', '.profile'
+// If you need something else, make an issue or PR.
+// Defaults to detecting the current shell and checking if the file exists.
+const shell = '.zshrc';
 
 try {
-  addToPATH(myFolder, logger);
+  addToPATH(myFolder, logger, shell);
 } catch (error) {
   console.log('Error adding folder to PATH.', error);
 }

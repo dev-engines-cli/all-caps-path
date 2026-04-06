@@ -1,12 +1,13 @@
 {
   "name": "all-caps-path",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "test": "vitest run --coverage",
     "unit": "vitest --coverage",
     "lint": "eslint *.js src tests",
     "fix": "npm run lint -- --fix",
+    "bump": "npx --yes -- @jsdevtools/version-bump-prompt@latest && npm i",
     "outdated": "npm outdated"
   },
   "devDependencies": {

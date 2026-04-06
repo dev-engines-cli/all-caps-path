@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import { exists } from '../helpers.js';
 
 /** @typedef {import('./types').LOGGER} LOGGER */
+/** @typedef {import('./types').SHELL} SHELL */
 
 /**
  * Checks the current shell and looks for ZSH/BASH/Profile
@@ -23,7 +24,7 @@ import { exists } from '../helpers.js';
  * @param  {LOGGER} logger  Function for error logging
  * @return {string}         Path to the config file
  */
-const getUnixConfigFile = function (logger) {
+const guessUnixConfigFile = function (logger) {
   const home = homedir();
   const shell = userInfo().shell || '/bin/bash';
   let configFile = join(home, '.profile');
@@ -69,11 +70,17 @@ const checkIfAlreadyAdded = function (configFile, exportLine, logger) {
 /**
  * Add the folder to the user's PATH for Unix based systems.
  *
- * @param {string} folder  The folder to add to the PATH
- * @param {LOGGER} logger  Function to handle logging
+ * @param {string} folder   The folder to add to the PATH
+ * @param {LOGGER} logger   Function to handle logging
+ * @param {SHELL}  [shell]  Explicitly defined shell config to use
  */
-export const addToUnixPATH = function (folder, logger) {
-  const configFile = getUnixConfigFile(logger);
+export const addToUnixPATH = function (folder, logger, shell) {
+  let configFile;
+  if (shell) {
+    configFile = join(homedir(), shell);
+  } else {
+    configFile = guessUnixConfigFile(logger);
+  }
   const exportLine = 'export PATH="' + folder + ':$PATH"';
 
   if (checkIfAlreadyAdded(configFile, exportLine, logger)) {

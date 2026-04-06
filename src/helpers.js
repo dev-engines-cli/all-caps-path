@@ -23,3 +23,17 @@ export const exists = function (file, logger) {
   }
   return fileExists;
 };
+
+/**
+ * List of the only supported shells.
+ * When changing this list, update /README.md and
+ * /src/addToPATH/addToUnixPATH.js
+ *
+ * @type {string[]}
+ */
+export const ALLOWED_SHELLS = Object.freeze([
+  '.zshrc',
+  '.bash_profile',
+  '.bashrc',
+  '.profile'
+]);
