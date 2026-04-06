@@ -19,7 +19,7 @@ const registryResponse = (folder) => {
     '    Path    REG_EXPAND_SZ    C:\\WINDOWS;%USERPROFILE%\\.example;' + folder +
     '\r\n\r\n'
   );
-}
+};
 
 describe('addToWindowsPATH', () => {
   const folder = 'C:\\folder';
