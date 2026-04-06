@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { fs, vol } from 'memfs';
 
 import { addToUnixPATH } from '@/addToPATH/addToUnixPATH.js';
+import { ALLOWED_SHELLS } from '@/helpers.js';
 
 vi.mock('node:fs', () => {
   return {
@@ -62,77 +63,94 @@ describe('addToUnixPATH', () => {
     vol.mkdirSync(join('/home', 'FAKE_USER'), { recursive: true });
   });
 
-  test('Writes to zsh config', () => {
-    global.makeShellZsh = true;
-    const zshrc = join('/home', 'FAKE_USER', '.zshrc');
-    vol.writeFileSync(zshrc, '');
+  describe('Explicitly defined config', () => {
+    test.each(ALLOWED_SHELLS)('Writes to %s config', (shell) => {
+      const config = join('/home', 'FAKE_USER', shell);
 
-    expect(addToUnixPATH(folder, logger))
-      .toEqual(undefined);
+      expect(addToUnixPATH(folder, logger, shell))
+        .toEqual(undefined);
 
-    expect(logger)
-      .not.toHaveBeenCalled();
+      expect(logger)
+        .not.toHaveBeenCalled();
 
-    expect(String(vol.readFileSync(zshrc)))
-      .toEqual(EXPORT_LINE);
+      expect(String(vol.readFileSync(config)))
+        .toEqual(EXPORT_LINE);
+    });
   });
 
-  test('Writes to bash profile', () => {
-    const bashProfile = join('/home', 'FAKE_USER', '.bash_profile');
-    vol.writeFileSync(bashProfile, '');
+  describe('Guessing config', () => {
+    test('Writes to zsh config', () => {
+      global.makeShellZsh = true;
+      const zshrc = join('/home', 'FAKE_USER', '.zshrc');
+      vol.writeFileSync(zshrc, '');
 
-    expect(addToUnixPATH(folder, logger))
-      .toEqual(undefined);
+      expect(addToUnixPATH(folder, logger))
+        .toEqual(undefined);
 
-    expect(logger)
-      .not.toHaveBeenCalled();
+      expect(logger)
+        .not.toHaveBeenCalled();
 
-    expect(String(vol.readFileSync(bashProfile)))
-      .toEqual(EXPORT_LINE);
-  });
+      expect(String(vol.readFileSync(zshrc)))
+        .toEqual(EXPORT_LINE);
+    });
 
-  test('Writes to bashrc profile', () => {
-    const bashrc = join('/home', 'FAKE_USER', '.bashrc');
-    vol.writeFileSync(bashrc, '');
+    test('Writes to bash profile', () => {
+      const bashProfile = join('/home', 'FAKE_USER', '.bash_profile');
+      vol.writeFileSync(bashProfile, '');
 
-    expect(addToUnixPATH(folder, logger))
-      .toEqual(undefined);
+      expect(addToUnixPATH(folder, logger))
+        .toEqual(undefined);
 
-    expect(logger)
-      .not.toHaveBeenCalled();
+      expect(logger)
+        .not.toHaveBeenCalled();
 
-    expect(String(vol.readFileSync(bashrc)))
-      .toEqual(EXPORT_LINE);
-  });
+      expect(String(vol.readFileSync(bashProfile)))
+        .toEqual(EXPORT_LINE);
+    });
 
-  test('Writes to .profile', () => {
-    global.makeFakeShell = true;
-    const profile = join('/home', 'FAKE_USER', '.profile');
-    vol.writeFileSync(profile, '');
+    test('Writes to bashrc profile', () => {
+      const bashrc = join('/home', 'FAKE_USER', '.bashrc');
+      vol.writeFileSync(bashrc, '');
 
-    expect(addToUnixPATH(folder, logger))
-      .toEqual(undefined);
+      expect(addToUnixPATH(folder, logger))
+        .toEqual(undefined);
 
-    expect(logger)
-      .not.toHaveBeenCalled();
+      expect(logger)
+        .not.toHaveBeenCalled();
 
-    expect(String(vol.readFileSync(profile)))
-      .toEqual(EXPORT_LINE);
-  });
+      expect(String(vol.readFileSync(bashrc)))
+        .toEqual(EXPORT_LINE);
+    });
 
-  test('Falls back to bash when shell is empty', () => {
-    global.makeShellEmpty = true;
-    const bashrc = join('/home', 'FAKE_USER', '.bashrc');
-    vol.writeFileSync(bashrc, '');
+    test('Writes to .profile', () => {
+      global.makeFakeShell = true;
+      const profile = join('/home', 'FAKE_USER', '.profile');
+      vol.writeFileSync(profile, '');
 
-    expect(addToUnixPATH(folder, logger))
-      .toEqual(undefined);
+      expect(addToUnixPATH(folder, logger))
+        .toEqual(undefined);
 
-    expect(logger)
-      .not.toHaveBeenCalled();
+      expect(logger)
+        .not.toHaveBeenCalled();
 
-    expect(String(vol.readFileSync(bashrc)))
-      .toEqual(EXPORT_LINE);
+      expect(String(vol.readFileSync(profile)))
+        .toEqual(EXPORT_LINE);
+    });
+
+    test('Falls back to bash when shell is empty', () => {
+      global.makeShellEmpty = true;
+      const bashrc = join('/home', 'FAKE_USER', '.bashrc');
+      vol.writeFileSync(bashrc, '');
+
+      expect(addToUnixPATH(folder, logger))
+        .toEqual(undefined);
+
+      expect(logger)
+        .not.toHaveBeenCalled();
+
+      expect(String(vol.readFileSync(bashrc)))
+        .toEqual(EXPORT_LINE);
+    });
   });
 
   test('PATH already added', () => {
