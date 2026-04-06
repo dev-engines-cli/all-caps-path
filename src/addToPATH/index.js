@@ -4,7 +4,10 @@
 
 import { platform } from 'node:os';
 
-import { exists } from '../helpers.js';
+import {
+  ALLOWED_SHELLS,
+  exists
+} from '../helpers.js';
 
 import { addToUnixPATH } from './addToUnixPATH.js';
 import { addToWindowsPATH } from './addToWindowsPATH.js';
@@ -27,16 +30,10 @@ export const addToPATH = function (folder, logger, shell) {
     logger('addToPATH requires `folder` to be a string. Aborting.');
     return;
   }
-  const allowedShell = [
-    '.zshrc',
-    '.bash_profile',
-    '.bashrc',
-    '.profile'
-  ];
-  if (shell && !allowedShell.includes(shell)) {
+  if (shell && !ALLOWED_SHELLS.includes(shell)) {
     logger(
       'addToPATH requires `shell` to be undefined or one of the following: ' +
-      allowedShell.join(', ')
+      ALLOWED_SHELLS.join(', ')
     );
     shell = undefined;
   }

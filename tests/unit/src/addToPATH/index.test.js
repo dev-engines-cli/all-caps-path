@@ -1,6 +1,7 @@
 import { fs, vol } from 'memfs';
 
 import { addToPATH } from '@/addToPATH/index.js';
+import { ALLOWED_SHELLS } from '@/helpers.js';
 
 vi.mock('node:fs', () => {
   return fs;
@@ -42,38 +43,6 @@ describe('addToPATH', () => {
       vol.mkdirSync(folder, { recursive: true });
     });
 
-    describe('Input checks', () => {
-      test('Logger is not a function', () => {
-        addToPATH(folder, 'NOT_A_FUNCTION');
-
-        expect(logger)
-          .not.toHaveBeenCalled();
-
-        expect(console.log)
-          .toHaveBeenCalledWith('STUB: Windows', folder);
-      });
-
-      test('Folder is not a string', () => {
-        addToPATH(123, logger);
-
-        expect(logger)
-          .toHaveBeenCalledWith('addToPATH requires `folder` to be a string. Aborting.');
-
-        expect(logger)
-          .not.toHaveBeenCalledWith('STUB: Windows', folder);
-      });
-
-      test('Folder does not exist', () => {
-        addToPATH('C:\\folder2', logger);
-
-        expect(logger)
-          .toHaveBeenCalledWith('addToPATH requires `folder` to be a file path that exists. Aborting.');
-
-        expect(logger)
-          .not.toHaveBeenCalledWith('STUB: Windows', folder);
-      });
-    });
-
     test('Uses Windows logic based on platform', () => {
       addToPATH(folder, logger);
 
@@ -88,6 +57,65 @@ describe('addToPATH', () => {
     beforeEach(() => {
       global.mockedPlatform = 'linux';
       vol.mkdirSync(folder, { recursive: true });
+    });
+
+    describe('Input checks', () => {
+      test('Logger is not a function', () => {
+        addToPATH(folder, 'NOT_A_FUNCTION');
+
+        expect(logger)
+          .not.toHaveBeenCalled();
+
+        expect(console.log)
+          .toHaveBeenCalledWith('STUB: Unix', folder);
+      });
+
+      test('Folder is not a string', () => {
+        addToPATH(123, logger);
+
+        expect(logger)
+          .toHaveBeenCalledWith('addToPATH requires `folder` to be a string. Aborting.');
+
+        expect(logger)
+          .not.toHaveBeenCalledWith('STUB: Unix', folder);
+      });
+
+      test('Folder does not exist', () => {
+        addToPATH('C:\\folder2', logger);
+
+        expect(logger)
+          .toHaveBeenCalledWith('addToPATH requires `folder` to be a file path that exists. Aborting.');
+
+        expect(logger)
+          .not.toHaveBeenCalledWith('STUB: Unix', folder);
+      });
+
+      describe('Shell inputs', () => {
+        const INVALID_SHELL_MESSAGE = (
+          'addToPATH requires `shell` to be undefined or one of ' +
+          'the following: .zshrc, .bash_profile, .bashrc, .profile'
+        );
+
+        test('Invalid shell input', () => {
+          addToPATH(folder, logger, 'FAKE');
+
+          expect(logger)
+            .toHaveBeenCalledWith(INVALID_SHELL_MESSAGE);
+
+          expect(logger)
+            .toHaveBeenCalledWith('STUB: Unix', folder);
+        });
+
+        test.each(ALLOWED_SHELLS)('Shell is %s', (shell) => {
+          addToPATH(folder, logger, shell);
+
+          expect(logger)
+            .not.toHaveBeenCalledWith(INVALID_SHELL_MESSAGE);
+
+          expect(logger)
+            .toHaveBeenCalledWith('STUB: Unix', folder);
+        });
+      });
     });
 
     test('Uses Unix logic based on platform', () => {
