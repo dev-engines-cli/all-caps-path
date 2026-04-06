@@ -27,27 +27,30 @@ export const addToWindowsPATH = function (folder, logger) {
   try {
     registryPATHResponse = String(execSync(registryCommand));
   } catch (error) {
-    logger('Error reading PATH data from Windows Registry.');
-    logger(error);
+    logger('Error reading PATH data from Windows Registry.', error);
+    return;
   }
 
-  // '\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    '
+  // '\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    ' +
   // 'REG_EXPAND_SZ    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n'
+  /* v8 ignore next */
   const fullSystemPATH = registryPATHResponse
     // ['\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    ',
     // '    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n']
-    .split('REG_EXPAND_SZ')
+    ?.split('REG_EXPAND_SZ')
     // '    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n'
-    [1]
+    ?.[1] || '';
+
+  const foldersInSystemPATH = fullSystemPATH
     // 'C:\\WINDOWS;%USERPROFILE%\\.example;'
-    .trim()
+    ?.trim()
     // ['C:\\WINDOWS', '%USERPROFILE%\\.example', '']
-    .split(';')
+    ?.split(';')
     // ['C:\\WINDOWS', '%USERPROFILE%\\.example']
-    .filter(Boolean);
+    ?.filter(Boolean);
 
   // Return early if the folder to add to the PATH is already on the PATH
-  if (fullSystemPATH.includes(folder)) {
+  if (foldersInSystemPATH?.includes(folder)) {
     return;
   }
 
@@ -68,7 +71,7 @@ export const addToWindowsPATH = function (folder, logger) {
         'Try again using "Run as administrator".'
       );
     } else {
-      logger(error.message);
+      logger('Error adding folder to PATH', error);
     }
   }
   if (!errorOccurred) {
