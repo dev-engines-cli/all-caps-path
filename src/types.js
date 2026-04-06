@@ -2,6 +2,8 @@
  * @file Sharable type definitions specific to the /src folder.
  */
 
+/** @typedef {'.zshrc'|'.bash_profile'|'.bashrc'|'.profile'} SHELL */
+
 /**
  * Optional custom function to handle logging out messages/errors.
  *
