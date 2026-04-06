@@ -5,7 +5,7 @@ A Node.js library to add/remove folders to the system environment PATH (or $PATH
 * Cross-Platform
 * MIT Licensced
 * 100% test coverage
-* Source is JavaScript, no binaries used (except the built-in PowerShell.exe on Windows)
+* Source is JavaScript, no binaries used (except what comes built-in to Windows)
 
 
 ## WIP: Tasks
@@ -15,8 +15,8 @@ This project is not finished yet.
 **Remaining tasks:**
 
 * [x] Project setup (lint/tests/CI)
-* [ ] addToPATH
-  * [ ] Windows functionality/tests
+* [x] addToPATH
+  * [x] Windows functionality/tests
   * [x] Unix functionality/tests
 * [ ] existsInPATH functionality
   * [ ] Windows functionality/tests
@@ -81,6 +81,10 @@ To add a folder to the user's PATH, use the **synchronous** `addToPATH` function
 
 You do not need to check if the folder already exists on the PATH, we will do this check
 first internally, and return early if it already exists.
+
+On Unix systems we will prefer `.zshrc`, `.bash_profile`, `.bashrc` and `.profile` in that order.
+
+On Windows we use `reg.exe` to get the system PATH and `setx.exe` to modify the system PATH in the registry. `setx` is available in Windows Vista and above, but can be installed in Windows XP with some kit thing, I don't know, you can look it up, why are you still using XP?
 
 ```js
 import { join } from 'node:path';
@@ -168,7 +172,8 @@ const asyncAwaitExample = async function () {
 * https://github.com/MarkTiedemann/win-path
   * Published 2017
   * Only does Windows systems
-  * Requires PowerShell already in PATH
+  * Allows picking process, user, or machine PATH's
+  * Uses PowerShell scripts to modify the PATH
   * Uses CJS
 * https://git.rootprojects.org/root/pathman/src/branch/master/npm
   * Published 2019, last update 2023
