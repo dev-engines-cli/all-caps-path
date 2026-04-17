@@ -23,6 +23,7 @@ export const addToWindowsPATH = function (folder, logger) {
   ].join('\\');
   const registryCommand = 'reg query "' + registryPATHLocation + '" /v Path';
 
+  /* eslint-disable-next-line no-useless-assignment */
   let registryPATHResponse = '';
   try {
     registryPATHResponse = String(execSync(registryCommand));
