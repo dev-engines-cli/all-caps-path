@@ -23,13 +23,14 @@ export const addToWindowsPATH = function (folder, logger) {
   ].join('\\');
   const registryCommand = 'reg query "' + registryPATHLocation + '" /v Path';
 
-  let registryPATHResponse = '';
+  let registryPATHResponse;
   try {
     registryPATHResponse = String(execSync(registryCommand));
   } catch (error) {
     logger('Error reading PATH data from Windows Registry.', error);
     return;
   }
+  registryPATHResponse = registryPATHResponse || '';
 
   // '\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    ' +
   // 'REG_EXPAND_SZ    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n'
