@@ -12,5 +12,4 @@
  * @param    {object} [data]   Optional additional information or error object
  */
 
-/* eslint-disable-next-line import/no-unused-modules */
 export const types = {};

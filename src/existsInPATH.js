@@ -25,6 +25,7 @@ export const getWindowsSystemPATHFromRegistry = function (logger) {
   ].join('\\');
   const registryCommand = 'reg query "' + locationOfSystemPATHInRegistry + '" /v Path';
 
+  /* eslint-disable-next-line no-useless-assignment */
   let registryPATHResponse = '';
   try {
     registryPATHResponse = String(execSync(registryCommand));
