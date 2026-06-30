@@ -3,7 +3,7 @@
 A Node.js library to add/remove folders to the system environment PATH (or $PATH).
 
 * Cross-Platform
-* MIT Licensced
+* MIT Licensed
 * 100% test coverage
 * Source is JavaScript, no binaries used (except what comes built-in to Windows)
 
