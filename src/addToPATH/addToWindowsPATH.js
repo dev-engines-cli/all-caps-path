@@ -4,6 +4,8 @@
 
 import { execSync } from 'node:child_process';
 
+import { getWindowsSystemPATHFromRegistry } from '../existsInPATH.js';
+
 /** @typedef {import('../types').LOGGER} LOGGER */
 
 /**
@@ -13,42 +15,12 @@ import { execSync } from 'node:child_process';
  * @param {LOGGER} logger  Function to handle logging
  */
 export const addToWindowsPATH = function (folder, logger) {
-  const registryPATHLocation = [
-    'HKLM',
-    'SYSTEM',
-    'CurrentControlSet',
-    'Control',
-    'Session Manager',
-    'Environment'
-  ].join('\\');
-  const registryCommand = 'reg query "' + registryPATHLocation + '" /v Path';
-
-  /* eslint-disable-next-line no-useless-assignment */
-  let registryPATHResponse = '';
+  let foldersInSystemPATH = [];
   try {
-    registryPATHResponse = String(execSync(registryCommand));
-  } catch (error) {
-    logger('Error reading PATH data from Windows Registry.', error);
+    foldersInSystemPATH = getWindowsSystemPATHFromRegistry(logger);
+  } catch {
     return;
   }
-
-  // '\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    ' +
-  // 'REG_EXPAND_SZ    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n'
-  /* v8 ignore next */
-  const fullSystemPATH = registryPATHResponse
-    // ['\r\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment\r\n    Path    ',
-    // '    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n']
-    ?.split('REG_EXPAND_SZ')
-    // '    C:\\WINDOWS;%USERPROFILE%\\.example;\r\n\r\n'
-    ?.[1] || '';
-
-  const foldersInSystemPATH = fullSystemPATH
-    // 'C:\\WINDOWS;%USERPROFILE%\\.example;'
-    ?.trim()
-    // ['C:\\WINDOWS', '%USERPROFILE%\\.example', '']
-    ?.split(';')
-    // ['C:\\WINDOWS', '%USERPROFILE%\\.example']
-    ?.filter(Boolean);
 
   // Return early if the folder to add to the PATH is already on the PATH
   if (foldersInSystemPATH?.includes(folder)) {
@@ -57,7 +29,7 @@ export const addToWindowsPATH = function (folder, logger) {
 
   const newSystemPATH = [
     folder,
-    ...fullSystemPATH
+    ...foldersInSystemPATH
   ].join(';');
 
   let errorOccurred = false;
