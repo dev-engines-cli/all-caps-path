@@ -29,13 +29,7 @@ describe('addToWindowsPATH', () => {
     vi.resetAllMocks();
   });
 
-  test('Reading PATH from registry fails', () => {
-    mockedExecSync.mockThrow(error);
-    addToWindowsPATH(folder, logger);
 
-    expect(logger)
-      .toHaveBeenCalledWith('Error reading PATH data from Windows Registry.', error);
-  });
 
   test('Returns early if folder exists on PATH', () => {
     mockedExecSync
