@@ -4,6 +4,8 @@ A Node.js library to add/remove folders to the system environment PATH (or $PATH
 
 * Cross-Platform
 * MIT Licensed
+* Hand-written
+* Zero dependencies
 * 100% test coverage
 * Source is JavaScript, no binaries used (except what comes built-in to Windows)
 
@@ -45,6 +47,8 @@ import {
 
 
 ## API
+
+APIs that are not implemented are subject to change.
 
 
 ## `existsInPATH`
@@ -166,6 +170,7 @@ const asyncAwaitExample = async function () {
 
 
 * * *
+
 
 ## Alternatives
 
